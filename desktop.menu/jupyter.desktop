@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Version=6.4.0
+Name=Jupyter Notebook
+Exec=/opt/conda/bin/jupyter notebook --notebook-dir /

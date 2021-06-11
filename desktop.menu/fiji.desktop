@@ -1,0 +1,5 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Fiji - ImageJ
+Exec=/opt/Fiji.app/ImageJ-linux64
