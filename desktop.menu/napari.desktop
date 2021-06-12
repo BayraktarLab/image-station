@@ -1,5 +1,13 @@
 [Desktop Entry]
 Version=0.4.8
-Type=Application
 Name=napari
+GenericName=napari
+X-GNOME-FullName=napari
+Comment=Scientific Image Analysis
+Type=Application
+Categories=Education;Science;ImageProcessing;
 Exec=/opt/conda/bin/napari
+TryExec=/opt/conda/bin/napari
+Terminal=false
+StartupNotify=true
+Icon=/opt/conda/lib/python3.8/site-packages/napari/resources/logo.png
