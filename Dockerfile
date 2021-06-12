@@ -64,7 +64,7 @@ RUN pip install \
       magicgui \
       opencv-python==4.1.2.30 \
       napari-aicsimageio \
-      aicsimageio \
+      aicsimageio==3.3.4 \
       xmlschema==1.4.1 \
       decorator==4.4.2 \
       xarray==0.16.2 \
