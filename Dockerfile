@@ -20,7 +20,10 @@ RUN cd /tmp && \
 
 ENV PATH /opt/conda/bin:$PATH
 
-RUN conda install --prefix /opt/conda/ --channel conda-forge python=3.8 numpy && \
+RUN conda install mamba -n base -c conda-forge && \
+    #conda install --prefix /opt/conda/ --channel conda-forge python=3.8 numpy && \
+    mamba update -n base -c defaults conda && \
+    mamba install python=3.8 numpy && \
     echo "source activate" >> ~/.bashrc
 
 # install turbiovnc and virtualgl
@@ -47,8 +50,8 @@ RUN curl -fsSL https://github.com/novnc/noVNC/archive/v${NOVNC_VERSION}.tar.gz |
     ln -s /opt/noVNC/vnc.html /opt/noVNC/index.html && \
     cd /opt/websockify && make
 
-RUN conda install -y -q -c conda-forge \
-    zarr \
+RUN mamba install -y -q -c conda-forge \
+    zarr\
     fsspec \
     backcall \
     trackpy \
@@ -62,7 +65,9 @@ RUN pip install \
       opencv-python==4.1.2.30 \
       napari-aicsimageio \
       aicsimageio \
-      xarray \
+      xmlschema==1.4.1 \
+      decorator==4.4.2 \
+      xarray==0.16.2 \
       cellpose-napari==0.1.3
 
 ARG ILASTIK_VERSION=1.3.3
@@ -83,9 +88,6 @@ RUN cd /tmp && \
 
 RUN conda clean --all --yes --quiet
 
-# add self signed certificate
-COPY self.pem /
-
 ENV DISPLAY :1
 ENV XDG_RUNTIME_DIR /tmp/xdg/
 
@@ -95,7 +97,6 @@ COPY xstartup /opt/xstartup
 # build resources now because /opt/conada will be Read Only from Singularity
 RUN python -c "import napari; napari._qt.qt_resources._icons._register_napari_resources()"
 
-# ENTRYPOINT /opt/websockify/run "${NOVNC_PORT:-5901}" --cert=/self.pem --web=/opt/noVNC --wrap-mode=ignore -- vncserver :1 -securitytypes otp -otp -xstartup /opt/xstartup
 COPY entrypoint.sh /
 ENTRYPOINT /entrypoint.sh
 

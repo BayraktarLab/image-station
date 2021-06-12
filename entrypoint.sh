@@ -22,7 +22,7 @@ NOVNC_PORT="${NOVNC_PORT:-5901}"
 
 # show access information
 echo -e "#--------------------------------------------------------------------------------"
-echo -e "#-- 🌐 Browse address:\thttps://$(hostname).internal.sanger.ac.uk:${NOVNC_PORT}"
+echo -e "#-- 🌐 Browse address:\thttp://$(hostname).internal.sanger.ac.uk:${NOVNC_PORT}"
 echo -e "#-- 🔐 noVNC password:\t${NOVNC_PASSWORD}" 
 echo -e "#--------------------------------------------------------------------------------"
 
