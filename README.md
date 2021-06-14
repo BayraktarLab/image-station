@@ -48,6 +48,7 @@ sudo singularity build imaging-tootls-v0.0.1.sif docker-daemon://imaging-tools:v
 singularity run /path/to/imaging-tootls-v0.1.0.sif
 ```
 
+📦 The already built image is avaiabale at `/nfs/cellgeni/singularity/images/imaging-tools-v0.0.1.sif`
 
 ## Options
 
@@ -64,17 +65,16 @@ docker run --rm -p 6080:6080 -e NOVNC_PORT=6080 imaging-tools:v0.0.1
 SINGULARITY_ENV_NOVN_PORT=6080 singularity run /path/to/imaging-tootls-v0.0.1.sif
 ```
 
-
 #### password
 A random password is generated using the user name and 4 numbers. If you want to use a custom password set the environment variabel `NOVNC_PASSWORD`
 For example:
 ```bash
-docker run --rm -p 5901:5901 -e NOVNC_PASSWORD=P4$$w0Rd imaging-tools:v0.0.1
+docker run --rm -it -p 5901:5901 -e NOVNC_PASSWORD=P4$$w0Rd imaging-tools:v0.0.1
 
 ```
 
 ```bash
-SINGULARITY_ENV_NOVNC_PASSWORDD=P4$$w0Rd singularity run /path/to/imaging-tootls-v0.0.1.sif
+SINGULARITY_ENV_NOVNC_PASSWORD=P4$$w0Rd singularity run /path/to/imaging-tootls-v0.0.1.sif
 ```
 
 # Additional notes
@@ -84,4 +84,18 @@ A `$HOME/.vnc` folder will be created to store necessary files for VNC to work.
 Clipbord works using the menu provided by noVNC. At the left side of the screen, click the clipboard icon and you can use that to copy and paste content to/from the running container.
 
 When launching napari for the first time, it will take a while to open while it downloads cellpose data to `$HOME/.cellpose`
+
+# Example on the farm
+
+Launch container as a job with 4CPU and 50 GB RAM
+```bash
+export PATH="/software/singularity-v3.6.4/bin:${PATH}"
+bsub -q basement \
+  -G team999 \
+  -n4 \
+  -M50000 \
+  -R"select[mem>50000] rusage[mem=50000] span[hosts=1]"  \
+  -Is \
+  singularity run -B /nfs,/lustre /nfs/cellgeni/singularity/images/imaging-tools-v0.0.1.sif
+```
 
