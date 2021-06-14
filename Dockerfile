@@ -21,9 +21,8 @@ RUN cd /tmp && \
 ENV PATH /opt/conda/bin:$PATH
 
 RUN conda install mamba -n base -c conda-forge && \
-    #conda install --prefix /opt/conda/ --channel conda-forge python=3.8 numpy && \
     mamba update -n base -c defaults conda && \
-    mamba install python=3.8 numpy && \
+    mamba install --channel conda-forge python=3.8 numpy && \
     echo "source activate" >> ~/.bashrc
 
 # install turbiovnc and virtualgl
@@ -31,7 +30,8 @@ ARG TURBOVNC_VERSION=2.2.6
 ARG VIRTUALGL_VERSION=2.6.5
 ARG LIBJPEG_VERSION=2.1.0
 RUN cd /tmp && \
-    curl -fsSL -O https://downloads.sourceforge.net/project/turbovnc/${TURBOVNC_VERSION}/turbovnc_${TURBOVNC_VERSION}_amd64.deb \
+    curl -fsSL \
+       -O https://downloads.sourceforge.net/project/turbovnc/${TURBOVNC_VERSION}/turbovnc_${TURBOVNC_VERSION}_amd64.deb \
        -O https://downloads.sourceforge.net/project/libjpeg-turbo/${LIBJPEG_VERSION}/libjpeg-turbo-official_${LIBJPEG_VERSION}_amd64.deb \
        -O https://downloads.sourceforge.net/project/virtualgl/${VIRTUALGL_VERSION}/virtualgl_${VIRTUALGL_VERSION}_amd64.deb && \
     dpkg -i *.deb && \
@@ -41,21 +41,26 @@ RUN cd /tmp && \
 ENV PATH ${PATH}:/opt/TurboVNC/bin
 
 # install noVNC and websockify
-ARG WEBSOCKIFY_VERSION=0.8.0
-ARG NOVNC_VERSION=1.0.0-beta
+ARG WEBSOCKIFY_VERSION=0.9.0
+ARG NOVNC_VERSION=1.1.0
 RUN curl -fsSL https://github.com/novnc/noVNC/archive/v${NOVNC_VERSION}.tar.gz | tar -xzf - -C /opt && \
     curl -fsSL https://github.com/novnc/websockify/archive/v${WEBSOCKIFY_VERSION}.tar.gz | tar -xzf - -C /opt && \
     mv /opt/noVNC-${NOVNC_VERSION} /opt/noVNC && \
     mv /opt/websockify-${WEBSOCKIFY_VERSION} /opt/websockify && \
     ln -s /opt/noVNC/vnc.html /opt/noVNC/index.html && \
-    cd /opt/websockify && make
+    cd /opt/websockify && make && \
+    mkdir -p /opt/websockify/lib/ && \
+    ln -s /opt/websockify/rebind.so /opt/websockify/lib/rebind.so
+
 
 RUN mamba install -y -q -c conda-forge \
-    zarr\
+    zarr \
     fsspec \
     backcall \
     trackpy \
     dask-image \
+    xmlschema==1.4.1 \
+    decorator==4.4.2 \
     notebook
 
 RUN pip install \
@@ -65,8 +70,6 @@ RUN pip install \
       opencv-python==4.1.2.30 \
       napari-aicsimageio \
       aicsimageio==3.3.4 \
-      xmlschema==1.4.1 \
-      decorator==4.4.2 \
       xarray==0.16.2 \
       cellpose-napari==0.1.3
 
@@ -87,6 +90,12 @@ RUN cd /tmp && \
     /opt/Fiji.app/ImageJ-linux64 --update update
 
 RUN conda clean --all --yes --quiet
+
+RUN echo 'no-remote-connections\n\
+no-pam-sessions\n\
+no-httpd\n\
+' > /etc/turbovncserver-security.conf
+
 
 ENV DISPLAY :1
 ENV XDG_RUNTIME_DIR /tmp/xdg/
