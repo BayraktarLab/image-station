@@ -79,11 +79,13 @@ SINGULARITY_ENV_NOVNC_PASSWORD=P4$$w0Rd singularity run /path/to/imaging-tootls-
 
 # Additional notes
 
-A `$HOME/.vnc` folder will be created to store necessary files for VNC to work.
+- A `$HOME/.vnc` folder will be created to store necessary files for VNC to work.
 
-Clipbord works using the menu provided by noVNC. At the left side of the screen, click the clipboard icon and you can use that to copy and paste content to/from the running container.
+- Clipbord works using the menu provided by noVNC. At the left side of the screen, click the clipboard icon and you can use that to copy and paste content to/from the running container.
 
-When launching napari for the first time, it will take a while to open while it downloads cellpose data to `$HOME/.cellpose`
+- When launching napari for the first time, it will take a while to open while it downloads cellpose data to `$HOME/.cellpose`
+
+- Desktop menu for Jupyter Notebook won't work for docker as root user because jupyter requires the option `--allow-root` in that case. Use it from terminal like so: `jupyter notebook --allow-root --notebook-dir=/`
 
 # Example on the farm
 
