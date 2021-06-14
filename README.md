@@ -29,7 +29,7 @@ docker build -t imaging-tools:v0.0.1 .
 ## Run docker container
 
 ```bash
-docker run --rm -p 5901:5901 imaging-tools:v0.0.1
+docker run --rm -it -p 5901:5901 imaging-tools:v0.0.1
 ```
 
 Now point your browser to http://YOUR-IP:5901 and input the password you saw on the terminal.
@@ -57,7 +57,7 @@ Default noVNC port used it 5901. If you want to use a custom port set the enviro
 For example:
 
 ```bash
-docker run --rm -p 6080:6080 -e NOVNC_PORT=6080 imaging-tools:v0.0.1
+docker run --rm -it -p 6080:6080 -e NOVNC_PORT=6080 imaging-tools:v0.0.1
 
 ```
 
