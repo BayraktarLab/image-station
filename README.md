@@ -66,21 +66,22 @@ SINGULARITY_ENV_NOVN_PORT=6080 singularity run /path/to/imaging-tootls-v0.0.1.si
 
 
 #### password
-A random password is generated using the user name and 4 numbers. If you want to use a custom password set the environment variabel `NOVNC_PASSWD`
+A random password is generated using the user name and 4 numbers. If you want to use a custom password set the environment variabel `NOVNC_PASSWORD`
 For example:
 ```bash
-docker run --rm -p 5901:5901 -e NOVNC_PASSWD=P4$$w0Rd imaging-tools:v0.0.1
+docker run --rm -p 5901:5901 -e NOVNC_PASSWORD=P4$$w0Rd imaging-tools:v0.0.1
 
 ```
 
 ```bash
-SINGULARITY_ENV_NOVNC_PASSWD=P4$$w0Rd singularity run /path/to/imaging-tootls-v0.0.1.sif
+SINGULARITY_ENV_NOVNC_PASSWORDD=P4$$w0Rd singularity run /path/to/imaging-tootls-v0.0.1.sif
 ```
 
 # Additional notes
 
-A `.vnc` folder will be created under `$HOME` to store necessary files for VNC to work.
+A `$HOME/.vnc` folder will be created to store necessary files for VNC to work.
 
 Clipbord works using the menu provided by noVNC. At the left side of the screen, click the clipboard icon and you can use that to copy and paste content to/from the running container.
 
- 
+When launching napari for the first time, it will take a while to open while it downloads cellpose data to `$HOME/.cellpose`
+
