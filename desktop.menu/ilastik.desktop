@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.3.3
+Name=Ilastik
+GenericName=Ilastik
+X-GNOME-FullName=Ilastik
+Comment=interactive learning and segmentation toolkit
+Type=Application
+Categories=Education;Science;ImageProcessing;
+Exec=/opt/ilastik/run_ilastik.sh
+TryExec=/opt/ilastik/run_ilastik.sh
+Terminal=false
+StartupNotify=true
+Icon=/opt/ilastik/ilastik-meta/ilastik/ilastik-icon.png
