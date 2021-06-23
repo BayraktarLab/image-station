@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=0.2.3
+Name=QuPath
+GenericName=QuPath
+X-GNOME-FullName=QuPath
+Comment=Quantitative Pathology & Bioimage Analysis
+Type=Application
+Categories=Education;Science;ImageProcessing;
+Exec=/opt/QuPath/bin/QuPath-0.2.3
+TryExec=/opt/QuPath/bin/QuPath-0.2.3
+Terminal=false
+StartupNotify=true
+Icon=/opt/QuPath/lib/QuPath-0.2.3.png
