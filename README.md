@@ -1,6 +1,6 @@
-# Imaging tools container
+# Image Station
 
-This container has interactive desktop access via web browser.
+This container has interactive desktop access via web browser for image visualization.
 
 # How does it work?
 
@@ -23,32 +23,32 @@ This container has interactive desktop access via web browser.
 ## Build docker image
 
 ```bash
-docker build -t imaging-tools:v0.0.1 .
+docker build -t image-station:v0.0.1 .
 ```
 
 ## Run docker container
 
 ```bash
-docker run --rm -it -p 5901:5901 imaging-tools:v0.0.1
+docker run --rm -it -p 5901:5901 image-station:v0.0.1
 ```
 
 Now point your browser to http://YOUR-IP:5901 and input the password you saw on the terminal.
 
 ## Build singularity image
 
-After buliding the docker image. Convert it to a singularity image. The following command will produce an `imaging-tootls-v0.1.0.sif` file as output.
+After buliding the docker image. Convert it to a singularity image. The following command will produce an `image-station-v0.1.0.sif` file as output.
 
 ```
-sudo singularity build imaging-tootls-v0.0.1.sif docker-daemon://imaging-tools:v0.0.1
+sudo singularity build image-station-v0.0.1.sif docker-daemon://image-station:v0.0.1
 ```
 
 ## Run singularity image
 
 ```bash
-singularity run /path/to/imaging-tootls-v0.1.0.sif
+singularity run /path/to/image-station-v0.1.0.sif
 ```
 
-📦 The already built image is avaiabale at `/nfs/cellgeni/singularity/images/imaging-tools-v0.0.1.sif`
+📦 The already built image is avaiabale at `/nfs/cellgeni/singularity/images/image-station-v0.0.1.sif`
 
 ## Options
 
@@ -57,24 +57,24 @@ Default noVNC port used it 5901. If you want to use a custom port set the enviro
 For example:
 
 ```bash
-docker run --rm -it -p 6080:6080 -e NOVNC_PORT=6080 imaging-tools:v0.0.1
+docker run --rm -it -p 6080:6080 -e NOVNC_PORT=6080 image-station:v0.0.1
 
 ```
 
 ```bash
-SINGULARITY_ENV_NOVN_PORT=6080 singularity run /path/to/imaging-tootls-v0.0.1.sif
+SINGULARITY_ENV_NOVN_PORT=6080 singularity run /path/to/image-station-v0.0.1.sif
 ```
 
 #### password
 A random password is generated using the user name and 4 numbers. If you want to use a custom password set the environment variabel `NOVNC_PASSWORD`
 For example:
 ```bash
-docker run --rm -it -p 5901:5901 -e NOVNC_PASSWORD=P4$$w0Rd imaging-tools:v0.0.1
+docker run --rm -it -p 5901:5901 -e NOVNC_PASSWORD=P4$$w0Rd image-station:v0.0.1
 
 ```
 
 ```bash
-SINGULARITY_ENV_NOVNC_PASSWORD=P4$$w0Rd singularity run /path/to/imaging-tootls-v0.0.1.sif
+SINGULARITY_ENV_NOVNC_PASSWORD=P4$$w0Rd singularity run /path/to/image-station-v0.0.1.sif
 ```
 
 # Additional notes
@@ -98,6 +98,6 @@ bsub -q basement \
   -M50000 \
   -R"select[mem>50000] rusage[mem=50000] span[hosts=1]"  \
   -Is \
-  singularity run -B /nfs,/lustre /nfs/cellgeni/singularity/images/imaging-tools-v0.0.1.sif
+  singularity run -B /nfs,/lustre /nfs/cellgeni/singularity/images/image-station-v0.0.1.sif
 ```
 
