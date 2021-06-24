@@ -101,3 +101,18 @@ bsub -q basement \
   singularity run -B /nfs,/lustre /nfs/cellgeni/singularity/images/image-station-v0.0.1.sif
 ```
 
+# Example on the farm with GPU
+
+Launch container as a job with 4CPU, 50 GB RAM with 1 GPU and 8 GB GPU RAM 
+```bash
+export PATH="/software/singularity-v3.6.4/bin:${PATH}"
+bsub -q gpu-basement \
+  -G team999 \
+  -n4 \
+  -M50000 \
+  -R"select[mem>50000] rusage[mem=50000] span[hosts=1]"  \
+  -gpu "mode=shared:j_exclusive=no:gmem=8000:num=1"  \
+  -Is \
+  singularity run --nv -B /nfs,/lustre /nfs/cellgeni/singularity/images/image-station-v0.0.1.sif
+```
+
