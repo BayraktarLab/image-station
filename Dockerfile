@@ -4,7 +4,7 @@ RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         vim ca-certificates curl wget unzip gcc git make libc6-dev libfuse2 \
         x11-xkb-utils xauth xfonts-base xkb-data at-spi2-core libpci-dev \
-        libegl-mesa0 libgl1-mesa-dev libgl1-mesa-glx libglx-dev \
+        libegl-mesa0 libgl1-mesa-dev libgl1-mesa-glx libglx-dev libpulse-dev libnss3 libglu1-mesa \
         libxcb-util1 libqt5x11extras5 libqt5dbus5 libqt5widgets5 libqt5network5 libqt5gui5 libqt5core5a \
         dbus-x11 xfce4 xfce4-panel xfce4-session xfce4-settings xorg xubuntu-icon-theme firefox && \
     rm -rf /var/lib/apt/lists/*
@@ -71,7 +71,10 @@ RUN pip install \
       napari-aicsimageio \
       aicsimageio==3.3.4 \
       xarray==0.16.2 \
-      cellpose-napari==0.1.3
+      cellpose-napari==0.1.3 \
+      scikit-learn \
+      "monai[all]" \
+      git+https://github.com/Project-MONAI/MONAILabel
 
 ARG ILASTIK_VERSION=1.3.3
 ARG QUPATH_VERSION=0.2.3
@@ -88,6 +91,10 @@ RUN cd /tmp && \
     /opt/Fiji.app/ImageJ-linux64 --headless --update add-update-site 'Local Z Projector' https://sites.imagej.net/LocalZProjector/ && \
     /opt/Fiji.app/ImageJ-linux64 --headless --update add-update-site 'Radial Symmetry' https://sites.imagej.net/RadialSymmetry/ && \
     /opt/Fiji.app/ImageJ-linux64 --update update
+
+RUN cd /tmp  && curl -LOJ https://download.slicer.org/bitstream/60add706ae4540bf6a89bf98 && \
+    tar -xvf Slicer-4.11.20210226-linux-amd64.tar.gz && rm Slicer-4.11.20210226-linux-amd64.tar.gz && \
+    mv Slicer-4.11.20210226-linux-amd64 /opt/Slicer
 
 RUN conda clean --all --yes --quiet
 

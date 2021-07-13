@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=4
+Name=3D Slicer
+GenericName=3D Slicer
+X-GNOME-FullName=3D Slicer
+Comment=Open-source medical image processing and visualization system
+Type=Application
+Categories=Education;Science;ImageProcessing;
+Exec=/opt/Slicer/Slicer
+TryExec=/opt/Slicer/Slicer
+Terminal=false
+StartupNotify=true
