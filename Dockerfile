@@ -12,7 +12,7 @@ RUN apt-get update && \
 # see http://bugs.python.org/issue19846
 ENV LANG C.UTF-8
 
-# install miniconda3 
+# install miniconda3
 RUN cd /tmp && \
     curl -fsSL -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
     /bin/bash Miniconda3-latest-Linux-x86_64.sh -b -p /opt/conda && \
@@ -64,14 +64,11 @@ RUN mamba install -y -q -c conda-forge \
     notebook
 
 RUN pip install \
-      "napari[all]==0.4.8" \
+      "napari[all]" \
       seaborn \
-      magicgui \
       opencv-python==4.1.2.30 \
       napari-aicsimageio \
-      aicsimageio==3.3.4 \
-      xarray==0.16.2 \
-      cellpose-napari==0.1.3
+      cellpose-napari
 
 ARG ILASTIK_VERSION=1.3.3
 ARG QUPATH_VERSION=0.2.3
@@ -104,7 +101,7 @@ COPY desktop.menu/* /usr/share/applications/
 COPY xstartup /opt/xstartup
 
 # build resources now because /opt/conada will be Read Only from Singularity
-RUN python -c "import napari; napari._qt.qt_resources._icons._register_napari_resources()"
+RUN python -c "import napari"
 
 COPY entrypoint.sh /
 ENTRYPOINT /entrypoint.sh
