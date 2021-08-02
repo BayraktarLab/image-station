@@ -3,8 +3,8 @@ FROM ubuntu:20.04
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         vim ca-certificates curl wget unzip gcc git make libc6-dev libfuse2 \
-        x11-xkb-utils xauth xfonts-base xkb-data at-spi2-core libpci-dev \
-        libegl-mesa0 libgl1-mesa-dev libgl1-mesa-glx libglx-dev libpulse-dev libnss3 libglu1-mesa \
+        x11-xkb-utils xauth xfonts-base xkb-data at-spi2-core libpci-dev mesa-utils \
+        libegl1-mesa libegl-mesa0 libgl1-mesa-dev libgl1-mesa-glx libglx-dev libpulse-dev libnss3 libglu1-mesa \
         libxcb-util1 libqt5x11extras5 libqt5dbus5 libqt5widgets5 libqt5network5 libqt5gui5 libqt5core5a \
         dbus-x11 xfce4 xfce4-panel xfce4-session xfce4-settings xorg xubuntu-icon-theme firefox && \
     rm -rf /var/lib/apt/lists/*
@@ -22,18 +22,18 @@ ENV PATH /opt/conda/bin:$PATH
 
 RUN conda install mamba -n base -c conda-forge && \
     mamba update -n base -c defaults conda && \
-    mamba install --channel conda-forge python=3.8 numpy && \
+    mamba install -y -c conda-forge python=3.8 numpy==1.19.5 cudatoolkit=11 && \
     echo "source activate" >> ~/.bashrc
 
 # install turbiovnc and virtualgl
 ARG TURBOVNC_VERSION=2.2.6
-ARG VIRTUALGL_VERSION=2.6.5
+ARG VIRTUALGL_VERSION=2.6.90
 ARG LIBJPEG_VERSION=2.1.0
 RUN cd /tmp && \
     curl -fsSL \
        -O https://downloads.sourceforge.net/project/turbovnc/${TURBOVNC_VERSION}/turbovnc_${TURBOVNC_VERSION}_amd64.deb \
        -O https://downloads.sourceforge.net/project/libjpeg-turbo/${LIBJPEG_VERSION}/libjpeg-turbo-official_${LIBJPEG_VERSION}_amd64.deb \
-       -O https://downloads.sourceforge.net/project/virtualgl/${VIRTUALGL_VERSION}/virtualgl_${VIRTUALGL_VERSION}_amd64.deb && \
+       -O https://downloads.sourceforge.net/project/virtualgl/2.6.90%20%283.0beta1%29/virtualgl_${VIRTUALGL_VERSION}_amd64.deb && \
     dpkg -i *.deb && \
     rm -f /tmp/*.deb && \
     sed -i 's/$host:/unix:/g' /opt/TurboVNC/bin/vncserver
