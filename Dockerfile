@@ -20,9 +20,9 @@ RUN cd /tmp && \
 
 ENV PATH /opt/conda/bin:$PATH
 
-RUN conda install mamba -n base -c conda-forge && \
+RUN conda install mamba -n base -c conda-forge -y && \
     mamba update -n base -c defaults conda && \
-    mamba install --channel conda-forge python=3.8 numpy && \
+    mamba install --channel conda-forge python=3.8 numpy -y && \
     echo "source activate" >> ~/.bashrc
 
 # install turbiovnc and virtualgl
@@ -101,7 +101,7 @@ COPY desktop.menu/* /usr/share/applications/
 COPY xstartup /opt/xstartup
 
 # build resources now because /opt/conada will be Read Only from Singularity
-RUN python -c "import napari"
+RUN python -c "from napari._qt.qt_resources import _register_napari_resources; _register_napari_resources()"
 
 COPY entrypoint.sh /
 ENTRYPOINT /entrypoint.sh
