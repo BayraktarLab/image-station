@@ -2,7 +2,7 @@ FROM ubuntu:20.04
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        vim ca-certificates curl wget unzip gcc git make libc6-dev libfuse2 \
+        vim ca-certificates curl wget unzip gcc git make libc6-dev libfuse2 software-properties-common \
         x11-xkb-utils xauth xfonts-base xkb-data at-spi2-core libpci-dev \
         libegl-mesa0 libgl1-mesa-dev libgl1-mesa-glx libglx-dev \
         libxcb-util1 libqt5x11extras5 libqt5dbus5 libqt5widgets5 libqt5network5 libqt5gui5 libqt5core5a \
@@ -11,6 +11,13 @@ RUN apt-get update && \
 
 # see http://bugs.python.org/issue19846
 ENV LANG C.UTF-8
+
+# install VSCode
+RUN wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg && \
+    install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/ && \
+    echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list && \
+    rm -f packages.microsoft.gpg && \
+    apt-get update && apt-get install -y code 
 
 # install miniconda3
 RUN cd /tmp && \
