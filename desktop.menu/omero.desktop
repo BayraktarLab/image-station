@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=5.8.0
+Name=OMERO.insight
+GenericName=OMERO.insight
+X-GNOME-FullName=OMERO.insight
+Comment=OMERO is client-server software for managing, visualizing and analyzing microscopy images and associated metadata.
+Type=Application
+Categories=Education;Science;ImageProcessing;
+Exec=/opt/OMERO.insight/bin/omero-insight
+TryExec=/opt/OMERO.insight/bin/omero-insight
+Terminal=false
+StartupNotify=true
+Icon=/usr/share/icons/elementary-xfce/apps/64/catfish.png

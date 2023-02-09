@@ -33,5 +33,5 @@ VNC_SOCKET="$HOME/.vnc/.socket"
 
 # launch websockifly start vncserver and exec virtualgl sessionxfc4 
 # TODO: try --unix-target=${VNC_SOCKET} / -rfbunixpath ${VNC_SOCKET}
-/opt/websockify/run ${NOVNC_PORT} --web=/opt/noVNC --wrap-mode=ignore -- vncserver -name "[$(whoami)]_Imaging_Tools_Container" -verbose -rfbport ${NOVNC_PORT} -rfbauth ${VNC_PASSWD} -securitytypes vnc -xstartup /opt/xstartup :1
+/opt/websockify/run ${NOVNC_PORT} --web=/opt/noVNC --wrap-mode=ignore -- vncserver -name "[$(whoami)] Image Station" -verbose -rfbport ${NOVNC_PORT} -rfbauth ${VNC_PASSWD} -securitytypes vnc -xstartup /opt/xstartup :1
 

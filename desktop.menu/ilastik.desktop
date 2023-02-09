@@ -10,4 +10,4 @@ Exec=/opt/ilastik/run_ilastik.sh
 TryExec=/opt/ilastik/run_ilastik.sh
 Terminal=false
 StartupNotify=true
-Icon=/opt/ilastik/ilastik-meta/ilastik/ilastik-icon.png
+Icon=/opt/ilastik/lib/python3.7/site-packages/ilastik/shell/gui/icons/32x32/ilastik-icon.png

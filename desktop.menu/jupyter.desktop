@@ -11,4 +11,4 @@ Exec=/opt/conda/bin/jupyter notebook --notebook-dir /
 TryExec=/opt/conda/bin/jupyter notebook --notebook-dir /
 Terminal=false
 StartupNotify=true
-Icon=/opt/conda/lib/python3.8/site-packages/notebook/static/base/images/favicon.ico
+Icon=/opt/conda/lib/python3.8/site-packages/jupyter_server/static/favicon.ico
