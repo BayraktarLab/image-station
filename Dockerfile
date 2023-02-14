@@ -1,12 +1,16 @@
 FROM ubuntu:22.04
 
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    apt-get install -y \
         vim ca-certificates curl wget unzip gcc git make libc6-dev libfuse2 software-properties-common \
         x11-xkb-utils xauth xfonts-base xkb-data at-spi2-core libpci-dev openjdk-17-jdk \
         libegl1-mesa libgl1-mesa-dev libgl1-mesa-glx libglx-dev \
         libxcb-util1 libqt5x11extras5 libqt5dbus5 libqt5widgets5 libqt5network5 libqt5gui5 libqt5core5a \
-        dbus-x11 xfce4 xfce4-panel xfce4-session xfce4-settings xorg xubuntu-icon-theme firefox && \
+        dbus-x11 xfce4 xfce4-panel xfce4-session xfce4-settings xorg xubuntu-icon-theme && \
+    add-apt-repository ppa:mozillateam/ppa && \
+    apt-get update && \
+    apt-get -y install firefox-esr && \
     rm -rf /var/lib/apt/lists/*
 
 # see http://bugs.python.org/issue19846
@@ -121,9 +125,6 @@ ENV XDG_RUNTIME_DIR /tmp/xdg/
 
 COPY desktop.menu/* /usr/share/applications/
 COPY xstartup /opt/xstartup
-
-# build resources now because /opt/conada will be Read Only from Singularity
-#RUN python -c "from napari._qt.qt_resources import _register_napari_resources; _register_napari_resources()"
 
 WORKDIR /
 
