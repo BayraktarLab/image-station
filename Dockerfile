@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get install -y \
         vim ca-certificates curl wget unzip gcc git make libc6-dev libfuse2 software-properties-common \
-        x11-xkb-utils xauth xfonts-base xkb-data at-spi2-core libpci-dev openjdk-17-jdk \
+        x11-xkb-utils xauth xfonts-base xkb-data at-spi2-core libpci-dev openjdk-17-jdk locales \
         libegl1-mesa libgl1-mesa-dev libgl1-mesa-glx libglx-dev \
         libxcb-util1 libqt5x11extras5 libqt5dbus5 libqt5widgets5 libqt5network5 libqt5gui5 libqt5core5a \
         dbus-x11 xfce4 xfce4-panel xfce4-session xfce4-settings xorg xubuntu-icon-theme && \
@@ -14,7 +14,9 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # see http://bugs.python.org/issue19846
-ENV LANG C.UTF-8
+ENV LANG=C.UTF-8
+RUN echo "$LANG UTF-8" > /etc/locale.gen && \
+    locale-gen
 
 WORKDIR /tmp
 
@@ -120,8 +122,7 @@ no-pam-sessions\n\
 no-httpd\n\
 ' > /etc/turbovncserver-security.conf
 
-ENV DISPLAY :1
-ENV XDG_RUNTIME_DIR /tmp/xdg/
+#ENV DISPLAY :1
 
 COPY desktop.menu/* /usr/share/applications/
 COPY xstartup /opt/xstartup
