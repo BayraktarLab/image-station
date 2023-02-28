@@ -1,1 +1,4 @@
-exec vglrun -d :1 startxfce4
+#!/usr/bin/env bash
+
+#exec vglrun -d :1 startxfce4
+exec vglrun startxfce4
